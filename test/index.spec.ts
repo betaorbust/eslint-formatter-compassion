@@ -1,10 +1,12 @@
 import { expect } from 'chai';
 import 'mocha';
-import { hello } from '../src/index';
+import base from './fixtures/eslint';
+import formatter from '../src/index';
 
-describe('Hello function', () => {
-    it('should return hello world', () => {
-        const result = hello();
-        expect(result).to.equal('Hello world!');
+describe('Eslint Formatter Guidance', () => {
+    it('should format the output nicely', () => {
+        const output = formatter(base);
+        expect(output).exist;
+        console.log(output);
     });
 });

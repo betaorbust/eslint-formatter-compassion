@@ -1,1 +1,3 @@
-export const hello = () => 'Hello world!';
+import eslint from './guides/eslint';
+
+export default eslint;
