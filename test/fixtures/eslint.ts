@@ -1,59 +1,43 @@
-export default [
+import { ResultsType } from '../formatters/index';
+
+const test: Array<ResultsType> = [
     {
         filePath: '/some/dev/box/index.js',
         messages: [
             {
-                ruleId: 'no-warning-comments',
+                ruleId: 'space-before-blocks',
                 severity: 1,
-                message: "Unexpected 'todo' comment.",
+                message: 'Unexpected chained assignment.',
                 line: 8,
                 column: 2,
                 nodeType: 'Line',
-                source: '\t// TODO: fix this later'
+                fatal: false
             },
             {
-                ruleId: 'no-multiple-empty-lines',
+                ruleId: 'no-multi-assign',
                 severity: 2,
-                message: 'More than 1 blank line not allowed.',
+                message: 'Unexpected chained assignment.',
                 line: 18,
                 column: 2,
                 nodeType: 'Program',
-                source: ''
-            }
-        ],
-        errorCount: 1,
-        warningCount: 1
-    },
-    {
-        filePath: '/some/dev/box/test.js',
-        messages: [
+                fatal: false
+            },
             {
-                ruleId: 'ava/use-test',
+                ruleId: 'jsx-a11y/click-events-have-key-events',
                 severity: 2,
-                message: 'AVA should be imported as `test`.',
-                line: 1,
-                column: 1,
-                nodeType: 'ImportDeclaration',
-                source: "import ava from 'ava';"
+                message:
+                    'Visible, non-interactive elements with click handlers must have at least one keyboard listener.',
+                line: 20,
+                column: 4,
+                nodeType: 'FunctionCall',
+                fatal: false
             }
         ],
         errorCount: 1,
-        warningCount: 0
-    },
-    {
-        filePath: '/some/dev/box/foo.js',
-        messages: [
-            {
-                ruleId: 'no-warning-comments',
-                severity: 1,
-                message: "Unexpected 'todo' comment.",
-                line: 8,
-                column: 2,
-                nodeType: 'Line',
-                source: '\t// TODO: fix this later'
-            }
-        ],
-        errorCount: 0,
-        warningCount: 1
+        fixableErrorCount: 0,
+        warningCount: 1,
+        fixableWarningCount: 0
     }
 ];
+
+export default test;
