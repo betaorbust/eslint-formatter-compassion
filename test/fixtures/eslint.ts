@@ -2,7 +2,7 @@ import { ResultsType } from '../formatters/index';
 
 const test: Array<ResultsType> = [
     {
-        filePath: '/some/dev/box/index.js',
+        filePath: './some/dev/box/index.js',
         messages: [
             {
                 ruleId: 'space-before-blocks',
@@ -36,7 +36,8 @@ const test: Array<ResultsType> = [
         errorCount: 1,
         fixableErrorCount: 0,
         warningCount: 1,
-        fixableWarningCount: 0
+        fixableWarningCount: 0,
+        source: 'something something something something\n'.repeat(200)
     }
 ];
 

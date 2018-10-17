@@ -78,7 +78,7 @@ export default function(
                             severity
                         }) => {
                             let context: Array<string> = [];
-                            if (ruleCollection[ruleId]) {
+                            if (ruleId !== null && ruleCollection[ruleId]) {
                                 message =
                                     ruleCollection[ruleId].message || message;
                                 context = ruleCollection[ruleId].context || [];
@@ -99,7 +99,7 @@ export default function(
                                     column || 0,
                                     messageType,
                                     message.replace(/([^ ])\.$/, '$1'),
-                                    chalk.dim(ruleId)
+                                    chalk.dim(ruleId || '')
                                 ]
                             ];
                             if (context && context.length > 0) {

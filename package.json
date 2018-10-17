@@ -1,52 +1,47 @@
 {
-  "name": "eslint-formatter-guidance",
-  "version": "0.0.0",
-  "description": "ESLint reporting with context and guidance for humans.",
-  "main": "dist/index.js",
-  "types": "dist/index",
-  "scripts": {
-    "build": "tsc -p .",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts",
-    "test:live": "mocha --watch --watch-extensions js,ts,json -r ts-node/register test/**/*.spec.ts"
-  },
-  "files": [
-    "/dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/betaorbust/eslint-formatter-guidance.git"
-  },
-  "keywords": [
-    "eslint",
-    "formatter",
-    "eslint-formatter"
-  ],
-  "author": "Jacques Favreau (@betaorbust)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/betaorbust/eslint-formatter-guidance/issues"
-  },
-  "homepage": "https://github.com/betaorbust/eslint-formatter-guidance#readme",
-  "devDependencies": {
-    "@types/chai": "^4.1.6",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.11.7",
-    "@types/strip-ansi": "^3.0.0",
-    "@types/text-table": "^0.2.0",
-    "chai": "^4.2.0",
-    "eslint": "^5.6.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^3.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "mocha": "^5.2.0",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.1.3",
-    "typescript-eslint-parser": "^20.0.0"
-  },
-  "dependencies": {
-    "@babel/code-frame": "^7.0.0",
-    "chalk": "^2.4.1",
-    "strip-ansi": "^5.0.0",
-    "text-table": "^0.2.0"
-  }
+    "name": "eslint-formatter-guidance",
+    "version": "0.0.0",
+    "description": "ESLint reporting with context and guidance for humans.",
+    "main": "dist/index.js",
+    "types": "dist/index",
+    "scripts": {
+        "build": "tsc -p . && cp ./package.json ./dist",
+        "test": "mocha -r ts-node/register test/**/*.spec.ts",
+        "test:live": "mocha --watch --watch-extensions js,ts,json -r ts-node/register test/**/*.spec.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/betaorbust/eslint-formatter-guidance.git"
+    },
+    "keywords": ["eslint", "formatter", "eslint-formatter"],
+    "author": "Jacques Favreau (@betaorbust)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/betaorbust/eslint-formatter-guidance/issues"
+    },
+    "homepage": "https://github.com/betaorbust/eslint-formatter-guidance#readme",
+    "devDependencies": {
+        "@types/babel__code-frame": "^7.0.0",
+        "@types/chai": "^4.1.6",
+        "@types/mocha": "^5.2.5",
+        "@types/node": "^10.11.7",
+        "@types/strip-ansi": "^3.0.0",
+        "@types/text-table": "^0.2.0",
+        "chai": "^4.2.0",
+        "eslint": "^5.6.1",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-config-prettier": "^3.1.0",
+        "eslint-plugin-import": "^2.14.0",
+        "mocha": "^5.2.0",
+        "proxyquire": "^2.1.0",
+        "ts-node": "^7.0.1",
+        "typescript": "^3.1.3",
+        "typescript-eslint-parser": "^20.0.0"
+    },
+    "dependencies": {
+        "@babel/code-frame": "^7.0.0",
+        "chalk": "^2.4.1",
+        "strip-ansi": "^5.0.0",
+        "text-table": "^0.2.0"
+    }
 }

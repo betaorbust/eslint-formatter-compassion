@@ -3,7 +3,7 @@ import guides, { mergeGuides } from './rule_data/index';
 
 // Eventually get these from process.env
 const requestedGuides = ['eslint', 'import', 'jsx-a11y', 'react', 'airbnb'];
-const requestedFormatter = 'stylish';
+const requestedFormatter = 'codeframe';
 
 export function getGuidesByName(guideNames: Array<string>) {
     return guideNames.map(guideName => {

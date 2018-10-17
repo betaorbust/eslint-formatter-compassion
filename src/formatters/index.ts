@@ -1,4 +1,5 @@
 import stylish from './stylish';
+import codeframe from './codeframe';
 import { RuleCollection } from '../rule_data/index';
 
 export type MessageType = {
@@ -13,7 +14,7 @@ export type MessageType = {
     line: number;
     message: string;
     nodeType: string;
-    ruleId: string;
+    ruleId: string | null;
     severity: number;
 };
 
@@ -24,6 +25,8 @@ export type ResultsType = {
     fixableWarningCount: number;
     messages: Array<MessageType>;
     warningCount: number;
+    output?: string;
+    source?: string;
 };
 
 export interface FormatFunction {
@@ -31,7 +34,8 @@ export interface FormatFunction {
 }
 
 const formatters: { [key: string]: FormatFunction } = {
-    stylish
+    stylish,
+    codeframe
 };
 
 export default formatters;
