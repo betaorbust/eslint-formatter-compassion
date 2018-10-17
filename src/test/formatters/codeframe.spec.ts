@@ -15,11 +15,11 @@ import chalk from 'chalk';
 import path from 'path';
 import stripAnsi from 'strip-ansi';
 
-import { ResultsType, MessageType } from '../../src/formatters/index';
-import { RuleCollection } from '../../src/rule_data/index';
+import { ResultsType, MessageType } from '../../../src/formatters/index';
+import { RuleCollection } from '../../../src/rule_data/index';
 
 import { fillResults } from '../utils';
-import formatter from '../../src/formatters/codeframe';
+import formatter from '../../../src/formatters/codeframe';
 
 const guide: RuleCollection = {
     'changed-message': {

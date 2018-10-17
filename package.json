@@ -1,25 +1,28 @@
 {
-    "name": "eslint-formatter-guidance",
+    "name": "eslint-formatter-compassion",
     "version": "0.0.0",
     "description": "ESLint reporting with context and guidance for humans.",
     "main": "dist/index.js",
     "types": "dist/index",
     "scripts": {
-        "build": "tsc -p . && cp ./package.json ./dist",
+        "clean": "rm -rf ./dist",
+        "build": "npm run clean && tsc -p . && sed -e 's/dist\\///g' package.json >| ./dist/package.json",
+        "publish": "npm run build && pushd ./dist && npm publish && popd",
         "test": "mocha -r ts-node/register test/**/*.spec.ts",
-        "test:live": "mocha --watch --watch-extensions js,ts,json -r ts-node/register test/**/*.spec.ts"
+        "test:live": "mocha --watch --watch-extensions js,ts,json -r ts-node/register test/**/*.spec.ts",
+        "lint": "npx eslint . -f ./dist/index --ext js,ts"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/betaorbust/eslint-formatter-guidance.git"
+        "url": "git+https://github.com/betaorbust/eslint-formatter-compassion.git"
     },
     "keywords": ["eslint", "formatter", "eslint-formatter"],
     "author": "Jacques Favreau (@betaorbust)",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/betaorbust/eslint-formatter-guidance/issues"
+        "url": "https://github.com/betaorbust/eslint-formatter-compassion/issues"
     },
-    "homepage": "https://github.com/betaorbust/eslint-formatter-guidance#readme",
+    "homepage": "https://github.com/betaorbust/eslint-formatter-compassion#readme",
     "devDependencies": {
         "@types/babel__code-frame": "^7.0.0",
         "@types/chai": "^4.1.6",

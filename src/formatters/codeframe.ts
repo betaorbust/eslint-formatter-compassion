@@ -79,13 +79,13 @@ function formatMessage(
         : parentResult.source;
 
     const formattedContext = context
-        ? chalk.dim(
+        ? chalk.gray(
               `✨Rule context: ${context
                   .map(c => chalk.blue(chalk.underline(c)))
                   .join(', ')}`
           )
         : '';
-    const formattedRuleId = ruleIdText ? chalk.dim(`Rule: ${ruleIdText}`) : '';
+    const formattedRuleId = ruleIdText ? chalk.gray(`Rule: ${ruleIdText}`) : '';
 
     const result = [
         `${type}: ${chalk.bold(

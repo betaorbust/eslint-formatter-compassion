@@ -1,4 +1,4 @@
-import { ResultsType, MessageType } from '../src/formatters/index';
+import { ResultsType, MessageType } from '../formatters/index';
 // import { RuleCollection } from "../src/rule_data/index";
 // export type MessagePartialType = {
 //     [key: ]
