@@ -7,8 +7,8 @@ import chalk from 'chalk';
 import { codeFrameColumns } from '@babel/code-frame';
 import path from 'path';
 
-import { ResultsType, MessageType } from './index';
-import { RuleCollection } from '../rule_data/index';
+import { ResultsType, MessageType } from './formatter-types';
+import { RuleCollection } from '../guides/guide-types';
 
 //------------------------------------------------------------------------------
 // Helpers
@@ -159,7 +159,6 @@ function formatSummary(
             )} potentially fixable with the \`--fix\` option.`
         );
     }
-
     return output;
 }
 
@@ -167,10 +166,7 @@ function formatSummary(
 // Public Interface
 //------------------------------------------------------------------------------
 
-export default function(
-    results: Array<ResultsType>,
-    ruleCollection: RuleCollection
-) {
+export = (results: Array<ResultsType>, ruleCollection: RuleCollection) => {
     let errors = 0;
     let warnings = 0;
     let fixableErrors = 0;
@@ -179,8 +175,8 @@ export default function(
     const resultsWithMessages = results.filter(
         result => result.messages.length > 0
     );
-
-    let output = resultsWithMessages
+    let output = '\n';
+    output += resultsWithMessages
         .reduce(
             (resultsOutput, result) => {
                 const messages = result.messages.map(
@@ -201,6 +197,7 @@ export default function(
 
     output += '\n';
     output += formatSummary(errors, warnings, fixableErrors, fixableWarnings);
+    output += '\n';
 
     return errors + warnings > 0 ? output : '';
-}
+};

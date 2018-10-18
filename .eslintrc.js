@@ -12,10 +12,10 @@ module.exports = {
         'import/no-unresolved': 'off',
         'no-param-reassign': 'off',
         'no-undef': 'off', // typescript will handle this for us
-        'no-unused-vars': 'off',
-        'import/no-extraneous-dependencies': [
-            'error',
-            { devDependencies: ['src/test/**/*', '**/*.spec.js'] }
-        ]
+        'no-unused-vars': 'off'
+        // 'import/no-extraneous-dependencies': [
+        //     'error',
+        //     { devDependencies: ['src/test/**/*', '**/*.spec.js'] }
+        // ]
     }
 };

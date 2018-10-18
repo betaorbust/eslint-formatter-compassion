@@ -7,9 +7,9 @@ import chalk, { Chalk } from 'chalk';
 import stripAnsi from 'strip-ansi';
 import table from 'text-table';
 
-import { ResultsType } from './index';
+import { ResultsType } from './formatter-types';
 
-import { RuleCollection } from '../rule_data/index';
+import { RuleCollection } from '../guides/guide-types';
 
 //------------------------------------------------------------------------------
 // Helpers
@@ -29,10 +29,7 @@ function pluralize(word: string, count: number) {
 // Public Interface
 //------------------------------------------------------------------------------
 
-export default function(
-    results: Array<ResultsType>,
-    ruleCollection: RuleCollection
-) {
+export = (results: Array<ResultsType>, ruleCollection: RuleCollection) => {
     let output = '\n';
     const counts = {
         error: 0,
@@ -178,4 +175,4 @@ export default function(
     }
 
     return total > 0 ? output : '';
-}
+};

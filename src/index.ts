@@ -1,13 +1,7 @@
-import { ResultsType, FormatFunction } from './formatters/index';
-import { mergeGuides } from './rule_data/index';
-import { getFormatterByName, getGuidesByName } from './runtime_builders';
+// The default version of this lib uses codeframe.
+// To use other pre-built formatters with all the guides loaded, check out
+// ./formatters/prebaked-with-all/guides
 
-// Eventually get these from process.env
-const requestedGuides = ['eslint', 'import', 'jsx-a11y', 'react', 'airbnb'];
-const requestedFormatter = 'codeframe';
-const thing = 'foo';
-export = (results: Array<ResultsType>) => {
-    const formatter = getFormatterByName(requestedFormatter);
-    const guide = mergeGuides(getGuidesByName(requestedGuides));
-    return formatter(results, guide);
-};
+import stylish from './formatters/prebaked-with-all-guides/codeframe';
+
+export = stylish;

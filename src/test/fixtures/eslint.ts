@@ -1,4 +1,4 @@
-import { ResultsType } from '../../formatters/index';
+import { ResultsType } from '../../formatters/formatter-types';
 
 const test: Array<ResultsType> = [
     {

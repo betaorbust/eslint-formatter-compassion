@@ -1,4 +1,4 @@
-import { RuleCollection } from './index';
+import { RuleCollection } from './guide-types';
 
 const rules: RuleCollection = {
     'react/boolean-prop-naming': { context: ['http://bit.ly/2Aeh2DL'] },
@@ -88,7 +88,7 @@ const rules: RuleCollection = {
     'react/jsx-wrap-multilines': { context: ['http://bit.ly/2AepZNx'] }
 };
 
-export default {
+export = {
     name: 'react',
     schema: 1,
     rules

@@ -1,4 +1,4 @@
-import { RuleCollection } from './index';
+import { RuleCollection } from './guide-types';
 
 const rules: RuleCollection = {
     'accessor-pairs': { context: ['http://bit.ly/2AdXCiA'] },
@@ -267,7 +267,7 @@ const rules: RuleCollection = {
     yoda: { context: ['http://bit.ly/2QSKkh2'] }
 };
 
-export default {
+export = {
     name: 'eslint',
     schema: 1,
     rules

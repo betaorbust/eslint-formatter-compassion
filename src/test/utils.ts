@@ -1,30 +1,4 @@
-import { ResultsType, MessageType } from '../formatters/index';
-// import { RuleCollection } from "../src/rule_data/index";
-// export type MessagePartialType = {
-//     [key: ]
-//     ruleId?: string;
-//     severity?: number;
-//     message?: string;
-//     line?: number;
-//     column?: number;
-//     nodeType?: string;
-//     source?: string;
-//     fatal?: boolean;
-// };
-
-// export type ReportPartialTypes = {
-//     filePath?: string;
-//     errorCount?: number;
-//     fixableErrorCount?: number;
-//     warningCount?: number;
-//     fixableWarningCount?: number;
-//     messages?: Array<MessagePartialType>;
-// };
-
-// type ReportPiece = {
-//     results: Partial<ResultsType>;
-//     messages: Array<Partial<MessageType>>;
-// };
+import { ResultsType, MessageType } from '../formatters/formatter-types';
 
 export const reportDefaults: ResultsType = {
     errorCount: 0,

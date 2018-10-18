@@ -1,7 +1,6 @@
-import { expect } from 'chai';
 import 'mocha';
-import base from '../fixtures/eslint';
-import format from '../../../src/index';
+import base from './fixtures/eslint';
+import format from '..';
 
 function checkTest(results: string) {}
 describe('Eslint Formatter Compassion', () => {

@@ -8,30 +8,15 @@
 //------------------------------------------------------------------------------
 
 import { assert } from 'chai';
-
-// import sinon from 'sinon';
-// import proxyquire from 'proxyquire';
-import chalk from 'chalk';
 import path from 'path';
 import stripAnsi from 'strip-ansi';
+import { guide, testCaseResults } from '../fixtures/with-guide-data';
 
-import { ResultsType, MessageType } from '../../../src/formatters/index';
-import { RuleCollection } from '../../../src/rule_data/index';
+import { ResultsType, MessageType } from '../../formatters/formatter-types';
 
 import { fillResults } from '../utils';
 import formatter from '../../../src/formatters/codeframe';
 
-const guide: RuleCollection = {
-    'changed-message': {
-        message: 'A provided message'
-    },
-    'with-context': {
-        context: ['https://some/context.for/you']
-    },
-    'with-multi-context': {
-        context: ['https://some.context', 'https://some.other/context']
-    }
-};
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -521,21 +506,7 @@ describe('formatter:codeframe', () => {
 
     describe('when a rule matches a some guidance', () => {
         it('should provide context if provided', () => {
-            const code = fillResults([
-                {
-                    filePath: 'foo.js',
-                    messages: <Array<MessageType>>[
-                        {
-                            message: 'This should have some context',
-                            ruleId: 'with-context',
-                            severity: 2
-                        }
-                    ],
-                    source: 'something',
-                    errorCount: 1,
-                    warningCount: 0
-                }
-            ]);
+            const code = testCaseResults.withContext;
             const result = formatter(code, guide);
 
             assert.strictEqual(
@@ -550,65 +521,37 @@ describe('formatter:codeframe', () => {
                 ].join('\n')
             );
         });
-    });
-    it('should provide multiple contexts if provided', () => {
-        const code = fillResults([
-            {
-                filePath: 'foo.js',
-                messages: <Array<MessageType>>[
-                    {
-                        message: 'This should have some context',
-                        ruleId: 'with-multi-context',
-                        severity: 2
-                    }
-                ],
-                source: 'something',
-                errorCount: 1,
-                warningCount: 0
-            }
-        ]);
-        const result = formatter(code, guide);
+        it('should provide multiple contexts if provided', () => {
+            const code = testCaseResults.withMultipleContext;
+            const result = formatter(code, guide);
 
-        assert.strictEqual(
-            stripAnsi(result),
-            [
-                'error: This should have some context at foo.js:1:1',
-                'Rule: with-multi-context     ✨Rule context: https://some.context, https://some.other/context',
-                '> 1 | something',
-                '    | ^',
-                '\n',
-                '1 error found.'
-            ].join('\n')
-        );
-    });
-    it('should swap in an alternate message if provided', () => {
-        const code = fillResults([
-            {
-                filePath: 'foo.js',
-                messages: <Array<MessageType>>[
-                    {
-                        message: 'This message should not be seen',
-                        ruleId: 'changed-message',
-                        severity: 2
-                    }
-                ],
-                source: 'something',
-                errorCount: 1,
-                warningCount: 0
-            }
-        ]);
-        const result = formatter(code, guide);
+            assert.strictEqual(
+                stripAnsi(result),
+                [
+                    'error: This should have some context at foo.js:1:1',
+                    'Rule: with-multi-context     ✨Rule context: https://some.context, https://some.other/context',
+                    '> 1 | something',
+                    '    | ^',
+                    '\n',
+                    '1 error found.'
+                ].join('\n')
+            );
+        });
+        it('should swap in an alternate message if provided', () => {
+            const code = testCaseResults.withMessageOverride;
+            const result = formatter(code, guide);
 
-        assert.strictEqual(
-            stripAnsi(result),
-            [
-                'error: A provided message at foo.js:1:1',
-                'Rule: changed-message',
-                '> 1 | something',
-                '    | ^',
-                '\n',
-                '1 error found.'
-            ].join('\n')
-        );
+            assert.strictEqual(
+                stripAnsi(result),
+                [
+                    'error: A provided message at foo.js:1:1',
+                    'Rule: changed-message',
+                    '> 1 | something',
+                    '    | ^',
+                    '\n',
+                    '1 error found.'
+                ].join('\n')
+            );
+        });
     });
 });
