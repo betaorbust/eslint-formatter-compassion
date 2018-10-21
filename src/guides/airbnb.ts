@@ -1,4 +1,4 @@
-import { RuleCollection } from './guide-types';
+import { RuleCollection, GuideRuleType } from './guide-types';
 
 const rules: RuleCollection = {
     'array-bracket-spacing': { context: ['http://bit.ly/2AexQLf'] },
@@ -103,7 +103,7 @@ const rules: RuleCollection = {
     'wrap-iife': { context: ['http://bit.ly/2AdAX5P'] }
 };
 
-export = {
+export = <GuideRuleType>{
     name: 'airbnb',
     schema: 1,
     rules

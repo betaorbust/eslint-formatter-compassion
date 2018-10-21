@@ -6,9 +6,10 @@
 import chalk from 'chalk';
 import { codeFrameColumns } from '@babel/code-frame';
 import path from 'path';
+import { resolveGuideDataForMessage } from '../utils';
 
 import { ResultsType, MessageType } from './formatter-types';
-import { RuleCollection } from '../guides/guide-types';
+import { GuideCollection } from '../guides/guide-types';
 
 //------------------------------------------------------------------------------
 // Helpers
@@ -41,12 +42,6 @@ function formatFilePath(filePath: string, line: number, column: number) {
     return chalk.green(relPath);
 }
 
-function getContextForRule(guide: RuleCollection, ruleId: string | null) {
-    if (ruleId && guide[ruleId]) {
-        return guide[ruleId];
-    }
-    return {};
-}
 /**
  * Gets the formatted output for a given message.
  * @param   {Object} message      The object that represents this message.
@@ -56,16 +51,18 @@ function getContextForRule(guide: RuleCollection, ruleId: string | null) {
 function formatMessage(
     message: MessageType,
     parentResult: ResultsType,
-    guide: RuleCollection
+    guides: GuideCollection
 ) {
     const type =
         message.fatal || message.severity === 2
             ? chalk.red('error')
             : chalk.yellow('warning');
 
-    const guideEntry = getContextForRule(guide, message.ruleId);
-    const messageText = guideEntry.message || message.message;
-    const { context } = guideEntry;
+    const { context, message: guideMessage } = resolveGuideDataForMessage(
+        message,
+        guides
+    );
+    const messageText = guideMessage || message.message;
 
     const ruleIdText = message.fatal ? '' : message.ruleId;
 
@@ -78,13 +75,14 @@ function formatMessage(
         ? parentResult.output
         : parentResult.source;
 
-    const formattedContext = context
-        ? chalk.gray(
-              `✨Rule context: ${context
-                  .map(c => chalk.blue(chalk.underline(c)))
-                  .join(', ')}`
-          )
-        : '';
+    const formattedContext =
+        context.length > 0
+            ? chalk.gray(
+                  `✨Rule context: ${context
+                      .map(c => chalk.blue(chalk.underline(c)))
+                      .join(', ')}`
+              )
+            : '';
     const formattedRuleId = ruleIdText ? chalk.gray(`Rule: ${ruleIdText}`) : '';
 
     const result = [
@@ -166,7 +164,7 @@ function formatSummary(
 // Public Interface
 //------------------------------------------------------------------------------
 
-export = (results: Array<ResultsType>, ruleCollection: RuleCollection) => {
+export = (results: Array<ResultsType>, guides: GuideCollection) => {
     let errors = 0;
     let warnings = 0;
     let fixableErrors = 0;
@@ -180,8 +178,7 @@ export = (results: Array<ResultsType>, ruleCollection: RuleCollection) => {
         .reduce(
             (resultsOutput, result) => {
                 const messages = result.messages.map(
-                    message =>
-                        `${formatMessage(message, result, ruleCollection)}\n\n`
+                    message => `${formatMessage(message, result, guides)}\n\n`
                 );
 
                 errors += result.errorCount;

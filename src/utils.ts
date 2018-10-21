@@ -1,5 +1,10 @@
 import assert from 'assert';
-import { GuideRuleType } from './guides/guide-types';
+import {
+    GuideRuleType,
+    GuideCollection,
+    ResolvedRule
+} from './guides/guide-types';
+import { MessageType } from './formatters/formatter-types';
 
 // Current supported versions of the schema in this release
 const SUPPORTED_SCHEMA_VERSIONS = new Set([1]);
@@ -42,7 +47,7 @@ function validateGuide(guide: GuideRuleType) {
  *
  *  @param {Object[]} guides An array of Guide objects to validate.
  */
-export function validateGuides(guides: Array<GuideRuleType>) {
+export function validateGuides(guides: GuideCollection) {
     assert(Array.isArray(guides), 'Guides must be in an array.');
     assert(guides.length > 0, 'At least one guide must be provided.');
     guides.forEach(guide => {
@@ -51,18 +56,42 @@ export function validateGuides(guides: Array<GuideRuleType>) {
     });
 }
 
-export function mergeGuides(guides: Array<GuideRuleType>) {
-    validateGuides(guides);
-    return guides.reduce(
-        (mergedData, guide) => {
-            mergedData.name += `-${guide.name}`;
-            mergedData.rules = Object.assign(mergedData.rules, guide.rules);
-            return mergedData;
-        },
-        {
-            name: 'merged',
-            schema: guides[0].schema,
-            rules: {}
+// Make sure we only validate a guide once.
+const validatedGuides = new WeakSet();
+
+export function resolveGuideDataForMessage(
+    incomingMessage: MessageType,
+    guides: GuideCollection
+): ResolvedRule {
+    // Make sure we only validate a collection of guides once.
+    if (!validatedGuides.has(guides)) {
+        validateGuides(guides);
+        validatedGuides.add(guides);
+    }
+
+    const unmodifiedResults: ResolvedRule = {
+        message: incomingMessage.message,
+        context: []
+    };
+
+    const { ruleId } = incomingMessage;
+    // Work from last guide towards the front.
+    const guideValues: Partial<ResolvedRule> = {};
+    for (let i = guides.length - 1; i >= 0; i -= 1) {
+        const guide = guides[i];
+        // If we have a match in this guide
+        if (ruleId && guide.rules[ruleId]) {
+            if (!guideValues.message && guide.rules[ruleId].message) {
+                guideValues.message = guide.rules[ruleId].message;
+            }
+            if (!guideValues.context && guide.rules[ruleId].context) {
+                guideValues.context = guide.rules[ruleId].context;
+            }
+            if (guideValues.message && guideValues.context) {
+                break;
+            }
         }
-    );
+    }
+
+    return Object.assign(unmodifiedResults, guideValues);
 }

@@ -3,9 +3,10 @@
  * @author Ronald Pijnacker Original -- Reworked for compassionate output by Jacques Favreau
  */
 
+import { resolveGuideDataForMessage } from '../utils';
 import { ResultsType, MessageType } from './formatter-types';
 
-import { RuleCollection } from '../guides/guide-types';
+import { GuideCollection } from '../guides/guide-types';
 //------------------------------------------------------------------------------
 // Helper Functions
 //------------------------------------------------------------------------------
@@ -27,7 +28,7 @@ function getMessageType(message: MessageType) {
 // Public Interface
 //------------------------------------------------------------------------------
 
-export = (results: Array<ResultsType>, guide: RuleCollection) => {
+export = (results: Array<ResultsType>, guides: GuideCollection) => {
     let output = '';
     let total = 0;
 
@@ -37,16 +38,19 @@ export = (results: Array<ResultsType>, guide: RuleCollection) => {
         output += messages
             .map(message => {
                 const { ruleId } = message;
-                const context = (!!ruleId && guide[ruleId]) || {};
+                const {
+                    message: messageText,
+                    context
+                } = resolveGuideDataForMessage(message, guides);
                 return [
                     filePath,
                     `(${message.line || 0}`,
                     message.column ? `,${message.column}` : '',
                     `): ${getMessageType(message)}`,
                     ruleId ? ` ${ruleId}` : '',
-                    ` : ${context.message || message.message || ''}`,
-                    context.context
-                        ? `  Additional context: ${context.context.join(', ')}`
+                    ` : ${messageText}`,
+                    context.length > 0
+                        ? `  Additional context: ${context.join(', ')}`
                         : '',
                     '\n'
                 ].join('');

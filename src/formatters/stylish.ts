@@ -6,10 +6,10 @@
 import chalk, { Chalk } from 'chalk';
 import stripAnsi from 'strip-ansi';
 import table from 'text-table';
+import { resolveGuideDataForMessage } from '../utils';
 
 import { ResultsType } from './formatter-types';
-
-import { RuleCollection } from '../guides/guide-types';
+import { GuideCollection, ResolvedRule } from '../guides/guide-types';
 
 //------------------------------------------------------------------------------
 // Helpers
@@ -29,7 +29,7 @@ function pluralize(word: string, count: number) {
 // Public Interface
 //------------------------------------------------------------------------------
 
-export = (results: Array<ResultsType>, ruleCollection: RuleCollection) => {
+export = (results: Array<ResultsType>, guides: GuideCollection) => {
     let output = '\n';
     const counts = {
         error: 0,
@@ -61,68 +61,53 @@ export = (results: Array<ResultsType>, ruleCollection: RuleCollection) => {
 
             output += `${table(
                 messages
-                    .map(
-                        ({
-                            column,
-                            endColumn,
-                            endLine,
-                            fatal,
-                            fix,
-                            line,
-                            message,
-                            nodeType,
-                            ruleId,
-                            severity
-                        }) => {
-                            let context: Array<string> = [];
-                            if (ruleId !== null && ruleCollection[ruleId]) {
-                                message =
-                                    ruleCollection[ruleId].message || message;
-                                context = ruleCollection[ruleId].context || [];
-                            }
-                            let messageType;
+                    .map(msg => {
+                        const { column, fatal, line, ruleId, severity } = msg;
 
-                            if (fatal || severity === 2) {
-                                messageType = chalk.red('error');
-                                summaryColor = 'red';
-                            } else {
-                                messageType = chalk.yellow('warning');
-                            }
+                        const { context, message } = resolveGuideDataForMessage(
+                            msg,
+                            guides
+                        );
+                        let messageType;
 
-                            const report = [
+                        if (fatal || severity === 2) {
+                            messageType = chalk.red('error');
+                            summaryColor = 'red';
+                        } else {
+                            messageType = chalk.yellow('warning');
+                        }
+
+                        const report = [
+                            [
+                                '',
+                                line || 0,
+                                column || 0,
+                                messageType,
+                                message.replace(/([^ ])\.$/, '$1'),
+                                chalk.dim(ruleId || '')
+                            ]
+                        ];
+                        if (context.length > 0) {
+                            report.push(
                                 [
                                     '',
-                                    line || 0,
-                                    column || 0,
-                                    messageType,
-                                    message.replace(/([^ ])\.$/, '$1'),
-                                    chalk.dim(ruleId || '')
-                                ]
-                            ];
-                            if (context && context.length > 0) {
-                                report.push(
-                                    [
-                                        '',
-                                        '',
-                                        '',
-                                        '',
-                                        chalk.dim(
-                                            `✨ Additional info: ${context
-                                                .map(c =>
-                                                    chalk.underline(
-                                                        chalk.blue(c)
-                                                    )
-                                                )
-                                                .join(', ')}`
-                                        ),
-                                        ''
-                                    ],
-                                    ['']
-                                );
-                            }
-                            return report;
+                                    '',
+                                    '',
+                                    '',
+                                    chalk.dim(
+                                        `✨ Additional info: ${context
+                                            .map(c =>
+                                                chalk.underline(chalk.blue(c))
+                                            )
+                                            .join(', ')}`
+                                    ),
+                                    ''
+                                ],
+                                ['']
+                            );
                         }
-                    )
+                        return report;
+                    })
                     .reduce((acc, cur) => acc.concat(cur), []),
                 {
                     align: ['l', 'r', 'l'],

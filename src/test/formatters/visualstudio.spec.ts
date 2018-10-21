@@ -9,7 +9,7 @@
 
 import { assert } from 'chai';
 import formatter from '../../formatters/visualstudio';
-import { guide, testCaseResults } from '../fixtures/with-guide-data';
+import { guides, testCaseResults } from '../fixtures/with-guide-data';
 import { fillResults } from '../test-utils';
 import { MessageType } from '../../formatters/formatter-types';
 
@@ -27,7 +27,7 @@ describe('formatter:visualstudio', () => {
         ]);
 
         it('should return nothing', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(result, 'no problems');
         });
@@ -50,7 +50,7 @@ describe('formatter:visualstudio', () => {
         ]);
 
         it('should return a string in the format filename(x,y): error z for errors', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,
@@ -60,7 +60,7 @@ describe('formatter:visualstudio', () => {
 
         it('should return a string in the format filename(x,y): warning z for warnings', () => {
             code[0].messages[0].severity = 1;
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,
@@ -86,7 +86,7 @@ describe('formatter:visualstudio', () => {
         ]);
 
         it('should return a string in the format filename(x,y): error  z', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,
@@ -119,7 +119,7 @@ describe('formatter:visualstudio', () => {
         ]);
 
         it('should return a string with multiple entries', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,
@@ -157,7 +157,7 @@ describe('formatter:visualstudio', () => {
         ]);
 
         it('should return a string with multiple entries', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,
@@ -181,7 +181,7 @@ describe('formatter:visualstudio', () => {
         ]);
 
         it('should return a string without line and column', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,
@@ -192,7 +192,7 @@ describe('formatter:visualstudio', () => {
     describe('when a rule matches a some guidance', () => {
         it('should provide context if provided', () => {
             const code = testCaseResults.withContext;
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,
@@ -205,7 +205,7 @@ describe('formatter:visualstudio', () => {
         });
         it('should provide multiple contexts if provided', () => {
             const code = testCaseResults.withMultipleContext;
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,
@@ -218,7 +218,7 @@ describe('formatter:visualstudio', () => {
         });
         it('should swap in an alternate message if provided', () => {
             const code = testCaseResults.withMessageOverride;
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 result,

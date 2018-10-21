@@ -1,18 +1,24 @@
 import { fillResults } from '../test-utils';
-import { RuleCollection } from '../../guides/guide-types';
+import { GuideCollection } from '../../guides/guide-types';
 import { MessageType } from '../../formatters/formatter-types';
 
-export const guide: RuleCollection = {
-    'changed-message': {
-        message: 'A provided message'
-    },
-    'with-context': {
-        context: ['https://some/context.for/you']
-    },
-    'with-multi-context': {
-        context: ['https://some.context', 'https://some.other/context']
+export const guides: GuideCollection = [
+    {
+        name: 'testguide',
+        schema: 1,
+        rules: {
+            'changed-message': {
+                message: 'A provided message'
+            },
+            'with-context': {
+                context: ['https://some/context.for/you']
+            },
+            'with-multi-context': {
+                context: ['https://some.context', 'https://some.other/context']
+            }
+        }
     }
-};
+];
 
 const withContext = fillResults([
     {

@@ -1,4 +1,4 @@
-import { RuleCollection } from './guide-types';
+import { RuleCollection, GuideRuleType } from './guide-types';
 
 const rules: RuleCollection = {
     'jsx-a11y/accessible-emoji': { context: ['http://bit.ly/2AdLU7o'] },
@@ -58,7 +58,7 @@ const rules: RuleCollection = {
     'jsx-a11y/tabindex-no-positive': { context: ['http://bit.ly/2AdaJAD'] }
 };
 
-export = {
+export = <GuideRuleType>{
     name: 'jsx-a11y',
     schema: 1,
     rules

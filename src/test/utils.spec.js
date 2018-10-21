@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { mergeGuides, validateGuides } = require('../utils');
+const { resolveGuideDataForMessage, validateGuides } = require('../utils');
 
 const guides = {
     guide1: {
@@ -9,6 +9,9 @@ const guides = {
             rule1: {
                 context: ['link1', 'link2'],
                 message: 'a message'
+            },
+            rule2: {
+                message: 'a message from rule 1'
             }
         }
     },
@@ -22,6 +25,9 @@ const guides = {
             },
             rule2: {
                 context: ['link5, link6']
+            },
+            rule3: {
+                context: ['link7', 'link8']
             }
         }
     },
@@ -97,20 +103,63 @@ describe('utils', () => {
             }).throws(/must be an object/);
         });
     });
-    describe('mergeGuides', () => {
-        it('validates guides', () => {
+    describe('resolveGuideDataForMessage', () => {
+        it('validates the guides', () => {
             expect(() => {
-                mergeGuides([guides.missingRules]);
+                resolveGuideDataForMessage({}, [guides.missingRules]);
             }).throws(/must have a rules property/);
         });
-        it('returns a single guide if only one provided', () => {
-            const merged = mergeGuides([guides.guide1]);
-            expect(merged.rules).to.deep.equal(guides.guide1.rules);
-        });
-        it('Appends names of merged guides', () => {
-            expect(mergeGuides([guides.guide1, guides.guide2]).name).to.equal(
-                'merged-guide1-guide2'
+        it('returns the first match for a rule from the ordered list of guides', () => {
+            const output = resolveGuideDataForMessage(
+                {
+                    ruleId: 'rule1',
+                    message: 'some message'
+                },
+                [guides.guide1, guides.guide2]
             );
+            expect(output.message).to.equal(guides.guide2.rules.rule1.message);
+            expect(output.context).to.deep.equal(
+                guides.guide2.rules.rule1.context
+            );
+        });
+        it('returns the first context match and the first message match independently', () => {
+            const output = resolveGuideDataForMessage(
+                {
+                    ruleId: 'rule2',
+                    message: 'some message'
+                },
+                [guides.guide1, guides.guide2]
+            );
+            expect(output).to.deep.equal({
+                context: guides.guide2.rules.rule2.context,
+                message: guides.guide1.rules.rule2.message
+            });
+        });
+        it('Returns input message with augmented context if no messages resolved', () => {
+            const output = resolveGuideDataForMessage(
+                {
+                    ruleId: 'rule3',
+                    message: 'Input message'
+                },
+                [guides.guide1, guides.guide2]
+            );
+            expect(output).to.deep.equal({
+                context: guides.guide2.rules.rule3.context,
+                message: 'Input message'
+            });
+        });
+        it('Returns the input message and empty context when no guides match', () => {
+            const rulePartial = {
+                ruleId: 'unmatchedId',
+                message: 'Input message'
+            };
+            const output = resolveGuideDataForMessage(rulePartial, [
+                guides.guide1
+            ]);
+            expect(output).to.deep.equal({
+                message: rulePartial.message,
+                context: []
+            });
         });
     });
 });

@@ -1,4 +1,4 @@
-import { RuleCollection } from '../guides/guide-types';
+import { GuideCollection } from '../guides/guide-types';
 
 export type MessageType = {
     column: number;
@@ -28,5 +28,5 @@ export type ResultsType = {
 };
 
 export interface FormatFunction {
-    (results: Array<ResultsType>, ruleCollection: RuleCollection): string;
+    (results: Array<ResultsType>, guides: GuideCollection): string;
 }

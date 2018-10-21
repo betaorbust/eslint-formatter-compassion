@@ -7,13 +7,13 @@ import react from '../../guides/react';
 
 // Types
 import { ResultsType, FormatFunction } from '../formatter-types';
-import { mergeGuides } from '../../utils';
+import { GuideCollection } from '../../guides/guide-types';
 
-const mergedGuides = mergeGuides([eslint, importGuide, jsxA11y, react, airbnb]);
+const guides: GuideCollection = [eslint, importGuide, jsxA11y, react, airbnb];
 
 export function prebaker(
     results: Array<ResultsType>,
     formatter: FormatFunction
 ) {
-    return formatter(results, mergedGuides);
+    return formatter(results, guides);
 }

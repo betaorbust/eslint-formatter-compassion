@@ -91,11 +91,11 @@ formatter.
 
 Compassionate Formatters are very similar to
 [ESLint's formatters](https://eslint.org/docs/user-guide/formatters/), with the exception that they
-take in a [Guide](#guides), and augment their output with that Guide's data. Because they take an
-additional agument, they're not compatible with ESLint right out of the box. If you'd like an easy
-start, see the Quick-Start section, which uses the pre-built, ESLint-compatible versions of these
-formatters. If you'd like to make your own or use custom guide information, see the section below on
-making your own custom formatter.
+take in an array of [Guides](#guides), and augment their output with those Guides' data. Because
+they take an additional agument, Compassionate Formatters not compatible with ESLint right out of
+the box. If you'd like an easy start, see the Quick-Start section, which uses the pre-built,
+ESLint-compatible versions of these formatters. If you'd like to make your own or use custom guide
+information, see the section below on making your own custom formatter.
 
 ### Pre-built Formatters
 
@@ -137,16 +137,12 @@ eslint-compatible formatter using the libraries and data provided by
 `eslint-formatter-compassionate`.
 
 ```js
-// Load up all the guides we want to use. You can mix and match as you like,
-// or do everyting from scratch.
+// Load up all the guides we want to use
 const airbnb = require('eslint-formatter-compassionate/guides/airbnb');
-const eslint = require('eslint-formatter-compassionate/guides/eslint'); // Provides all eslint docs.
+const eslint = require('eslint-formatter-compassionate/guides/eslint');
 const importGuide = require('eslint-formatter-compassionate/guides/import');
 const jsxA11y = require('eslint-formatter-compassionate/guides/jsx-a11y');
 const react = require('eslint-formatter-compassionate/guides/react');
-
-// Import the utility to merge guides together
-const { mergeGuides } = require('eslint-formatter-compassionate/utils');
 
 // Import the formatter we want to use for output
 const formatter = require('eslint-formatter-compassionate/formatters/codeframe');
@@ -166,18 +162,15 @@ const myGuide = {
     }
 };
 
-// We now merge our guides together.
+// We now pick the guides we want to include.
 // Order is important. It's usually best to start with 'eslint' and build
-// up from there. If these were shallow objects, we'd do something like
-// Object.assign({}, eslint, importGuide, /* etc */); but because we want
-// to keep our schema controlled, we provide the mergeGuides method.
-const mergedGuides = mergeGuides([eslint, importGuide, jsxA11y, react, airbnb, myGuide]);
+// up from there. The order of precedence is right to left.
+const guides = [eslint, importGuide, jsxA11y, react, airbnb, myGuide];
 
-// Finally, we export a single function, taking in the results from ESLint,
-// and returning the output of calling our formatter with those results, and
-// our merged guides.
-// This function is ESLint compatible, and can now be used like any other formatter.
-module.exports = eslintResults => formatter(eslintResults, mergedGuides);
+// finally, we export a single function, taking in the results from ESLint,
+// and returning the output of calling our formatter with our results, and
+// our guides.
+module.exports = eslintResults => formatter(eslintResults, guides);
 ```
 
 With the above file saved as `./my-formatter.js` in your project, you can run eslint with your

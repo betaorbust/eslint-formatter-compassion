@@ -10,7 +10,7 @@
 import { assert } from 'chai';
 import path from 'path';
 import stripAnsi from 'strip-ansi';
-import { guide, testCaseResults } from '../fixtures/with-guide-data';
+import { guides, testCaseResults } from '../fixtures/with-guide-data';
 
 import { ResultsType, MessageType } from '../../formatters/formatter-types';
 
@@ -33,7 +33,7 @@ describe('formatter:codeframe', () => {
         ];
 
         it('should return nothing', () => {
-            const result = formatter(fillResults(code), guide);
+            const result = formatter(fillResults(code), guides);
 
             assert.strictEqual(result, '');
         });
@@ -61,7 +61,7 @@ describe('formatter:codeframe', () => {
         ]);
 
         it('should return a string in the correct format for warnings', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
             assert.strictEqual(
                 stripAnsi(result),
                 [
@@ -88,7 +88,7 @@ describe('formatter:codeframe', () => {
             });
 
             it('should return a string in the correct format', () => {
-                const result = formatter(code, guide);
+                const result = formatter(code, guides);
                 assert.strictEqual(
                     stripAnsi(result),
                     [
@@ -132,7 +132,7 @@ describe('formatter:codeframe', () => {
         ]);
 
         it('should return a string in the correct format for errors', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -173,7 +173,7 @@ describe('formatter:codeframe', () => {
         ]);
 
         it("should return a string in the correct format (retaining the ' .')", () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -209,7 +209,7 @@ describe('formatter:codeframe', () => {
         ]);
 
         it('should return a string with multiple entries', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -256,7 +256,7 @@ describe('formatter:codeframe', () => {
         ]);
 
         it('should return a string with code preview pointing to the correct location after fixes', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -314,7 +314,7 @@ describe('formatter:codeframe', () => {
         ]);
 
         it('should return a string with multiple entries', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -360,7 +360,7 @@ describe('formatter:codeframe', () => {
         ]);
 
         it('should return a string in the correct format', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -394,7 +394,7 @@ describe('formatter:codeframe', () => {
         ]);
 
         it('should return a string without code preview (codeframe)', () => {
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -424,7 +424,7 @@ describe('formatter:codeframe', () => {
                 }
             ]);
 
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.notInclude(result, 'potentially fixable');
         });
@@ -449,7 +449,7 @@ describe('formatter:codeframe', () => {
                 }
             ]);
 
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.include(
                 result,
@@ -473,7 +473,7 @@ describe('formatter:codeframe', () => {
                 }
             ]);
 
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.include(
                 result,
@@ -509,7 +509,7 @@ describe('formatter:codeframe', () => {
                 }
             ]);
 
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.include(
                 result,
@@ -521,7 +521,7 @@ describe('formatter:codeframe', () => {
     describe('when a rule matches a some guidance', () => {
         it('should provide context if provided', () => {
             const code = testCaseResults.withContext;
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -539,7 +539,7 @@ describe('formatter:codeframe', () => {
         });
         it('should provide multiple contexts if provided', () => {
             const code = testCaseResults.withMultipleContext;
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),
@@ -557,7 +557,7 @@ describe('formatter:codeframe', () => {
         });
         it('should swap in an alternate message if provided', () => {
             const code = testCaseResults.withMessageOverride;
-            const result = formatter(code, guide);
+            const result = formatter(code, guides);
 
             assert.strictEqual(
                 stripAnsi(result),

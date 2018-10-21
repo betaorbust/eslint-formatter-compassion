@@ -5,9 +5,6 @@ const importGuide = require('eslint-formatter-compassionate/guides/import');
 const jsxA11y = require('eslint-formatter-compassionate/guides/jsx-a11y');
 const react = require('eslint-formatter-compassionate/guides/react');
 
-// Import the utility to merge guides together
-const { mergeGuides } = require('eslint-formatter-compassionate/utils');
-
 // Import the formatter we want to use for output
 const formatter = require('eslint-formatter-compassionate/formatters/codeframe');
 
@@ -26,21 +23,12 @@ const myGuide = {
     }
 };
 
-// We now merge our guides together.
+// We now pick the guides we want to include.
 // Order is important. It's usually best to start with 'eslint' and build
-// up from there. If these were shallow objects, we'd do something like
-// Object.assign({}, eslint, importGuide, /* etc */); but because we want
-// to keep our schema controlled, we provide the mergeGuides method.
-const mergedGuides = mergeGuides([
-    eslint,
-    importGuide,
-    jsxA11y,
-    react,
-    airbnb,
-    myGuide
-]);
+// up from there. The order of precedence is right to left.
+const guides = [eslint, importGuide, jsxA11y, react, airbnb, myGuide];
 
 // finally, we export a single function, taking in the results from ESLint,
 // and returning the output of calling our formatter with our results, and
-// our merged guides.
-module.exports = eslintResults => formatter(eslintResults, mergedGuides);
+// our guides.
+module.exports = eslintResults => formatter(eslintResults, guides);

@@ -1,6 +1,15 @@
-type Rule = {
+/* eslint-disable no-use-before-define */
+
+import { MessageType } from '../formatters/formatter-types';
+
+export type Rule = {
     message?: string;
     context?: Array<string>;
+};
+
+export type ResolvedRule = {
+    message: string;
+    context: Array<string>;
 };
 
 export type RuleCollection = {
@@ -13,3 +22,5 @@ export type GuideRuleType = {
     schema: number;
     rules: RuleCollection;
 };
+
+export type GuideCollection = GuideRuleType[];
