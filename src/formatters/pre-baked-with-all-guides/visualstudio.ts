@@ -1,5 +1,5 @@
 // Prebaked version of visualstudio formatter with every guide applied.
-// Use via `eslint . -f eslint-formatter-compassionate/formatters/prebaked-with-all-guides/visualstudio`
+// Use via `eslint . -f eslint-formatter-compassionate/formatters/pre-baked-with-all-guides/visualstudio`
 
 import formatter from '../visualstudio';
 import { prebaker } from './prebaker';

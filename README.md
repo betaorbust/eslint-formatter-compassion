@@ -1,31 +1,35 @@
 # Compassionate Linting (`eslint-formatter-compassionate`)
 
-Linter output for humans.
+> _Compassion is a more active form of empathy._  
+> _– April Wensel_
 
-> ### _The fastest path to `eslint-disable-line` runs directly through cryptic error messages._
-
-ESLint is a fantastic tool, that lets us write better, more maintainable code. Unfortunately, when
-we get feedback from a linter, it usually comes across about as friendly as
+ESLint is a fantastic tool that lets us write better, more maintainable code. Unfortunately, when
+contributors get feedback from a linter, it usually comes across about as friendly as
 
 ```
 You did something wrong. Here's a token to Google around for.
 ```
 
-😓
+That's frustrating! Especially when your contributor doesn't know exactly what the rule is trying to
+enforce or, more importantly, _**why**_ the project has it enabled.
 
-At a minimum, it would be useful to understand what the larger context around why the rule was
-written (ESLint docs!), but even more useful would be to understand the _why_ of the rule.
+**We can do better, by sharing insight into our project's values and providing additional context
+right at the moment linting errors appear. This fosters a more aligned, less contentious development
+environment.**
 
-`eslint-formatter-compassionate` helps address that _why_ by letting you add contextual links to
-your own style guide (or any of the guides provided by this package) and modify error messages to
-fit your organization's needs. Leave the linting up to ESLint, but when it comes time to communicate
-with your human engineers, grab the reins and set some better context.
+`eslint-formatter-compassionate` helps provide this alignment by letting you add contextual links to
+your _**own style guide**_ (or any of the [guides](#guides) provided by this package) and modify
+existing lint error messages to fit your organization's needs. Leave linting code up to ESLint, but
+when it comes time to communicate with human engineers, grab the reins and set some better context.
 
 ![gif of formatter running in a terminal](./docs/images/formatter-demo.gif)
 
 ## Usage
 
 ### Quickstart
+
+`eslint-formatter-compassionate` provides several out-of-the-box ESLint formatters that use all the
+general guide data available. Getting started is as easy as telling ESLint which formatter to use.
 
 ```bash
 # Assuming you already have eslint running in your project.
@@ -37,7 +41,7 @@ yarn add -D eslint-formatter-compassionate
 
 # Lint using one of the pre-baked all-guides-enabled formatters
 # The -f (or --format) flag lets you select a different formatter.
-eslint ./ -f './node_modules/eslint-formatter-compassionate/formatters/prebaked-with-all-guides/stylish'
+eslint ./ -f './node_modules/eslint-formatter-compassionate/formatters/pre-baked-with-all-guides/stylish'
 ```
 
 ### Project Components
@@ -52,7 +56,7 @@ This package provides three major component types:
         output.
 -   Prebaked All-in-one ESLint formatters
     -   With all our supported guides. Just pick one of the pre-built, ESLint-compatible formatters
-        from `eslint-formatter-compassionate/prebaked-with-all-guides/<formatter type>`
+        from `eslint-formatter-compassionate/pre-baked-with-all-guides/<formatter type>`
 
 You can roll your own formatter using `eslint-formatter-compassionate` as a base, or use one of the
 pre-built formatters of your choice.
@@ -83,9 +87,9 @@ module.exports = {
 If you'd like to use your own guide content, please see the section below on rolling your own
 formatter.
 
-### Formatters
+### Compassionate Formatters
 
-Formatters are very similar to
+Compassionate Formatters are very similar to
 [ESLint's formatters](https://eslint.org/docs/user-guide/formatters/), with the exception that they
 take in a [Guide](#guides), and augment their output with that Guide's data. Because they take an
 additional agument, they're not compatible with ESLint right out of the box. If you'd like an easy
@@ -96,30 +100,41 @@ making your own custom formatter.
 ### Pre-built Formatters
 
 There are several pre-built format styles (based off of popular eslint-provided formatters) which
-can be found in `eslint-formatter-compassionate/formatters/prebaked-with-all-guides`.
+can be found in `eslint-formatter-compassionate/formatters/pre-baked-with-all-guides/<formatName>`
+and are immediately usable with ESLint.
 
 Currently, we have:
 
--   `codeframe` Providing the maximum context for a linting error. Based off of ESLint's CodeFrame
-    formatter.
+-   `codeframe` Providing the maximum context for a linting error.
+    -   Based on ESLint's
+        [codeframe formatter](https://eslint.org/docs/user-guide/formatters/#codeframe).
+    -   `eslint-formatter-compassionate/formatters/pre-baked-with-all-guides/codeframe`
     -   ![codeframe output](./docs/images/codeframe.png)
--   `stylish` Providing a more compact view. Based off of ESLint's Stylish formatter.
+-   `stylish` Providing a more compact view.
+    -   Based on ESLint's
+        [stylish formatter](https://eslint.org/docs/user-guide/formatters/#stylish).
+    -   `eslint-formatter-compassionate/formatters/pre-baked-with-all-guides/stylish`
     -   ![stylish output](./docs/images/stylish.png)
 -   `visualstudio` For use in IDE tooltips.
+    -   Based on ESLint's
+        [visualstudio formatter](https://eslint.org/docs/user-guide/formatters/#visualstudio).
+    -   `eslint-formatter-compassionate/formatters/pre-baked-with-all-guides/visualstudio`
     -   ![visualstudio output](./docs/images/visualstudio.png)
 
-Each pre-built solution includes every available guide.
+Each pre-built solution includes every available [guide](#guide).
 
 #### Use:
 
 ```sh
-eslint ./ -f './node_modules/eslint-formatter-compassionate/formatters/prebaked-with-all-guides/stylish'
+## Pass the path to your pre-baked formatter of choice using the -f or --format flag
+eslint ./ -f './node_modules/eslint-formatter-compassionate/formatters/pre-baked-with-all-guides/stylish'
 ```
 
 ## Customizing Formatters
 
-If you'd like to add your own context or customizations, it's very simple to make a project or
-team-specific eslint formatter and guide information.
+If you'd like to add your own context links or message customization, you can add compose an
+eslint-compatible formatter using the libraries and data provided by
+`eslint-formatter-compassionate`.
 
 ```js
 // Load up all the guides we want to use. You can mix and match as you like,
@@ -158,15 +173,15 @@ const myGuide = {
 // to keep our schema controlled, we provide the mergeGuides method.
 const mergedGuides = mergeGuides([eslint, importGuide, jsxA11y, react, airbnb, myGuide]);
 
-// finally, we export a single function, taking in the results from ESLint,
-// and returning the output of calling our formatter with our results, and
+// Finally, we export a single function, taking in the results from ESLint,
+// and returning the output of calling our formatter with those results, and
 // our merged guides.
 // This function is ESLint compatible, and can now be used like any other formatter.
 module.exports = eslintResults => formatter(eslintResults, mergedGuides);
 ```
 
-If you saved that file as `./my-formatter.js` in your project, you can run eslint with your
-contextualized formatter like this:
+With the above file saved as `./my-formatter.js` in your project, you can run eslint with your
+custom compassionate formatter like this:
 
 ```sh
 eslint ./ -f './my-formatter.js'

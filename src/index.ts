@@ -2,6 +2,6 @@
 // To use other pre-built formatters with all the guides loaded, check out
 // ./formatters/prebaked-with-all/guides
 
-import stylish from './formatters/prebaked-with-all-guides/codeframe';
+import stylish from './formatters/pre-baked-with-all-guides/codeframe';
 
 export = stylish;

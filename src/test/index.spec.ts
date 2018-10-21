@@ -1,4 +1,3 @@
-import 'mocha';
 import base from './fixtures/eslint';
 import format from '..';
 

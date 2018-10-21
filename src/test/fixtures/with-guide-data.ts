@@ -1,4 +1,4 @@
-import { fillResults } from '../utils';
+import { fillResults } from '../test-utils';
 import { RuleCollection } from '../../guides/guide-types';
 import { MessageType } from '../../formatters/formatter-types';
 

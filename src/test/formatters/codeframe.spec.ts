@@ -14,7 +14,7 @@ import { guide, testCaseResults } from '../fixtures/with-guide-data';
 
 import { ResultsType, MessageType } from '../../formatters/formatter-types';
 
-import { fillResults } from '../utils';
+import { fillResults } from '../test-utils';
 import formatter from '../../../src/formatters/codeframe';
 
 //------------------------------------------------------------------------------
@@ -65,6 +65,7 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     `warning: Unexpected foo at ${path.join(
                         'lib',
                         'foo.js'
@@ -75,7 +76,8 @@ describe('formatter:codeframe', () => {
                     '  2 |  var bar = 2;',
                     '  3 | ',
                     '\n',
-                    '1 warning found.'
+                    '1 warning found.',
+                    ''
                 ].join('\n')
             );
         });
@@ -90,6 +92,7 @@ describe('formatter:codeframe', () => {
                 assert.strictEqual(
                     stripAnsi(result),
                     [
+                        '',
                         `warning: Unexpected foo at ${path.join(
                             'lib',
                             'foo.js'
@@ -101,7 +104,8 @@ describe('formatter:codeframe', () => {
                         '  3 | ',
                         '\n',
                         '1 warning found.',
-                        '1 warning potentially fixable with the `--fix` option.'
+                        '1 warning potentially fixable with the `--fix` option.',
+                        ''
                     ].join('\n')
                 );
             });
@@ -133,6 +137,7 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     `error: Unexpected foo at ${path.join(
                         'lib',
                         'foo.js'
@@ -143,7 +148,8 @@ describe('formatter:codeframe', () => {
                     '  2 |  var bar = 2;',
                     '  3 | ',
                     '\n',
-                    '1 error found.'
+                    '1 error found.',
+                    ''
                 ].join('\n')
             );
         });
@@ -171,7 +177,7 @@ describe('formatter:codeframe', () => {
 
             assert.strictEqual(
                 stripAnsi(result),
-                `error: Unexpected . at foo.js:1:1\nRule: foo\n> 1 | foo\n    | ^\n\n\n1 error found.`
+                `\nerror: Unexpected . at foo.js:1:1\nRule: foo\n> 1 | foo\n    | ^\n\n\n1 error found.\n`
             );
         });
     });
@@ -208,6 +214,7 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     'error: Missing semicolon at foo.js:1:14',
                     'Rule: semi',
                     '> 1 | const foo = 1',
@@ -220,7 +227,8 @@ describe('formatter:codeframe', () => {
                     '    |       ^',
                     '  2 | ',
                     '\n',
-                    '2 errors found.'
+                    '2 errors found.',
+                    ''
                 ].join('\n')
             );
         });
@@ -253,6 +261,7 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     "error: 'foo' is assigned a value but never used at foo.js:4:11",
                     'Rule: no-unused-vars',
                     '  2 | ',
@@ -263,7 +272,8 @@ describe('formatter:codeframe', () => {
                     '  6 | ',
                     '  7 | ',
                     '\n',
-                    '1 error found.'
+                    '1 error found.',
+                    ''
                 ].join('\n')
             );
         });
@@ -309,6 +319,7 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     'error: Missing semicolon at foo.js:1:14',
                     'Rule: semi',
                     '> 1 | const foo = 1',
@@ -321,7 +332,8 @@ describe('formatter:codeframe', () => {
                     '    |              ^',
                     '  2 | ',
                     '\n',
-                    '2 errors found.'
+                    '2 errors found.',
+                    ''
                 ].join('\n')
             );
         });
@@ -353,12 +365,14 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     'error: Parsing error: Unexpected token { at foo.js:1:2',
                     '> 1 | e{}',
                     '    |  ^',
                     '  2 | ',
                     '\n',
-                    '1 error found.'
+                    '1 error found.',
+                    ''
                 ].join('\n')
             );
         });
@@ -384,7 +398,7 @@ describe('formatter:codeframe', () => {
 
             assert.strictEqual(
                 stripAnsi(result),
-                "error: Couldn't find foo.js at foo.js:1:1\n\n\n1 error found."
+                "\nerror: Couldn't find foo.js at foo.js:1:1\n\n\n1 error found.\n"
             );
         });
     });
@@ -512,12 +526,14 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     'error: This should have some context at foo.js:1:1',
                     'Rule: with-context     ✨Rule context: https://some/context.for/you',
                     '> 1 | something',
                     '    | ^',
                     '\n',
-                    '1 error found.'
+                    '1 error found.',
+                    ''
                 ].join('\n')
             );
         });
@@ -528,12 +544,14 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     'error: This should have some context at foo.js:1:1',
                     'Rule: with-multi-context     ✨Rule context: https://some.context, https://some.other/context',
                     '> 1 | something',
                     '    | ^',
                     '\n',
-                    '1 error found.'
+                    '1 error found.',
+                    ''
                 ].join('\n')
             );
         });
@@ -544,12 +562,14 @@ describe('formatter:codeframe', () => {
             assert.strictEqual(
                 stripAnsi(result),
                 [
+                    '',
                     'error: A provided message at foo.js:1:1',
                     'Rule: changed-message',
                     '> 1 | something',
                     '    | ^',
                     '\n',
-                    '1 error found.'
+                    '1 error found.',
+                    ''
                 ].join('\n')
             );
         });

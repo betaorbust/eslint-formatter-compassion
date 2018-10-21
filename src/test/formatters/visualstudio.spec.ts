@@ -10,7 +10,7 @@
 import { assert } from 'chai';
 import formatter from '../../formatters/visualstudio';
 import { guide, testCaseResults } from '../fixtures/with-guide-data';
-import { fillResults } from '../utils';
+import { fillResults } from '../test-utils';
 import { MessageType } from '../../formatters/formatter-types';
 
 //------------------------------------------------------------------------------
