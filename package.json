@@ -12,11 +12,20 @@
         "test:live": "mocha --watch --watch-extensions js,ts,json -r ts-node/register 'src/test/**/*.spec.ts'",
         "lint": "npx eslint . -f ./dist/index --ext js,ts"
     },
+    "husky": {
+        "hooks": {
+          "pre-push": "npm test && npm lint"
+        }
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/betaorbust/eslint-formatter-compassion.git"
     },
-    "keywords": ["eslint", "formatter", "eslint-formatter"],
+    "keywords": [
+        "eslint",
+        "formatter",
+        "eslint-formatter"
+    ],
     "author": "Jacques Favreau (@betaorbust)",
     "license": "MIT",
     "bugs": {
@@ -35,6 +44,7 @@
         "eslint-config-airbnb-base": "^13.1.0",
         "eslint-config-prettier": "^3.1.0",
         "eslint-plugin-import": "^2.14.0",
+        "husky": "^1.1.2",
         "mocha": "^5.2.0",
         "proxyquire": "^2.1.0",
         "ts-node": "^7.0.1",
