@@ -4,6 +4,9 @@
     "description": "ESLint reporting with context and guidance for humans.",
     "main": "dist/index.js",
     "types": "dist/index",
+    "engines": {
+        "node": ">=8.0.0"
+    },
     "scripts": {
         "clean": "rm -rf ./dist",
         "build": "npm run clean && tsc -p . && sed -e 's/dist\\///g' package.json >| ./dist/package.json",
