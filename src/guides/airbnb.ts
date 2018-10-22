@@ -59,6 +59,7 @@ const rules: RuleCollection = {
     'no-param-reassign': {
         context: ['http://bit.ly/2Aegaz9', 'http://bit.ly/2AdcBt9']
     },
+    'no-plusplus': { context: ['http://bit.ly/noplusplus'] },
     'no-prototype-builtins': { context: ['http://bit.ly/2AdugRo'] },
     'no-restricted-globals': { context: ['http://bit.ly/2CqYFNt'] },
     'no-restricted-properties.': { context: ['http://bit.ly/2AexLap'] },
