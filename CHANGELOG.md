@@ -10,10 +10,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 -   `no-plusplus` context to the `airbnb` guide.
--   This changelog
+-   This changelog.
+-   Guard for publishing from the root.
 
 ### Fixed
 
+-   Actually publish the compiled directory instead of everything.
+-   Changed `publish` task to `pub` because NPM will run `npm publish` if you run a script called
+    publish 🤦‍♂️.
 -   Removed broken `main` entry from package.
 
 ### Deprecated

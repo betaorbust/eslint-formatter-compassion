@@ -7,9 +7,10 @@
         "node": ">=8.0.0"
     },
     "scripts": {
+        "prepublish": "if [ ! -d \"../src\" ]; then echo \"USE npm run pub INSTEAD!\"; exit 1; fi;",
         "clean": "rm -rf ./dist",
         "build": "npm run clean && tsc -p . && sed -e 's/dist\\///g' package.json >| ./dist/package.json",
-        "publish": "npm run build && pushd ./dist && npm publish && popd",
+        "pub": "npm run build && pushd ./dist && npm publish && popd",
         "test": "mocha -r ts-node/register 'src/test/**/*.spec.{js,ts}'",
         "test:live": "mocha --watch --watch-extensions js,ts,json -r ts-node/register 'src/test/**/*.spec.ts'",
         "lint": "npx eslint . -f ./dist/index --ext js,ts"
