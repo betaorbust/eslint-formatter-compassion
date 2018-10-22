@@ -6,6 +6,13 @@
 [![Dependencies up to date](https://david-dm.org/betaorbust/eslint-formatter-compassion.svg)](https://david-dm.org/betaorbust/eslint-formatter-compassion)
 [![Dev dependencies up to date](https://david-dm.org/betaorbust/eslint-formatter-compassion/dev-status.svg)](https://david-dm.org/betaorbust/eslint-formatter-compassion?type=dev)
 
+A tool for customizing messages and adding context links in ESLint. Let your contributors know _why_
+a rule is turned on, and what they can do to fix their code.
+
+![Screenshot showing customized message and context links in ESLint output](./docs/images/overview.png)
+
+## Why?
+
 > _Compassion is a more active form of empathy._  
 > _– April Wensel_
 
