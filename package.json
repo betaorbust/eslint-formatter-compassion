@@ -9,7 +9,8 @@
     "scripts": {
         "prepublish": "if [ ! -d \"../src\" ]; then echo \"USE npm run pub INSTEAD!\"; exit 1; fi;",
         "clean": "rm -rf ./dist",
-        "build": "npm run clean && tsc -p . && sed -e 's/dist\\///g' package.json >| ./dist/package.json",
+        "build": "npm run clean && tsc -p . && sed -e 's/dist\\///g' package.json >| ./dist/package.json && cp README.md ./dist && cp CHANGELOG.md ./dist",
+        "pub-dry-run": "npm run build && pushd ./dist && npm publish --dry-run && popd",
         "pub": "npm run build && pushd ./dist && npm publish && popd",
         "test": "mocha -r ts-node/register 'src/test/**/*.spec.{js,ts}'",
         "test:live": "mocha --watch --watch-extensions js,ts,json -r ts-node/register 'src/test/**/*.spec.ts'",
@@ -24,11 +25,7 @@
         "type": "git",
         "url": "git+https://github.com/betaorbust/eslint-formatter-compassion.git"
     },
-    "keywords": [
-        "eslint",
-        "formatter",
-        "eslint-formatter"
-    ],
+    "keywords": ["eslint", "formatter", "eslint-formatter"],
     "author": "Jacques Favreau (@betaorbust)",
     "license": "MIT",
     "bugs": {
