@@ -1,6 +1,6 @@
 {
     "name": "eslint-formatter-compassion",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "ESLint reporting with context and guidance for humans.",
     "types": "dist/index",
     "engines": {
@@ -24,7 +24,11 @@
         "type": "git",
         "url": "git+https://github.com/betaorbust/eslint-formatter-compassion.git"
     },
-    "keywords": ["eslint", "formatter", "eslint-formatter"],
+    "keywords": [
+        "eslint",
+        "formatter",
+        "eslint-formatter"
+    ],
     "author": "Jacques Favreau (@betaorbust)",
     "license": "MIT",
     "bugs": {
