@@ -69,7 +69,7 @@ This package provides three major component types:
         output.
 -   Prebaked All-in-one ESLint formatters
     -   With all our supported guides. Just pick one of the pre-built, ESLint-compatible formatters
-        from `eslint-formatter-compassion/pre-baked-with-all-guides/<formatter type>`
+        from `eslint-formatter-compassion/formatters/pre-baked-with-all-guides/<formatter type>`
 
 You can roll your own formatter using `eslint-formatter-compassion` as a base, or use one of the
 pre-built formatters of your choice.
